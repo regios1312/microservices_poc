@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: department-service
+  config:
+    import: "optional:configserver:http://localhost:9296/"
+server:
+  port: 9001

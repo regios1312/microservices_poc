@@ -1,0 +1,37 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: config-app
+  labels:
+    app: config-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: config-app
+  template:
+    metadata:
+      labels:
+        app: config-app
+    spec:
+      containers:
+      - name: config-app
+        image: regios1312/alternate-config-server:0.0.2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9296
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: config-server-svc
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8111
+    targetPort: 9296
+    protocol: TCP
+  selector:
+    app: config-app
